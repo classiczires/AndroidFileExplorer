@@ -1,10 +1,9 @@
 package com.zires.androidfileexplorer.model;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.attribute.BasicFileAttributes;
+import com.zires.androidfileexplorer.util.CommonUtil;
+import com.zires.androidfileexplorer.util.FilesUtil;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,47 +11,100 @@ import java.util.List;
  * Created by ClassicZires on 10/26/2019.
  **/
 
-public class Folder {
-    private String path;
-    private String name;
-    private String creator;
-    private Date createDate;
+public class Folder extends FolderInformation {
+    private List<Folder> folders;
+    private List<File> files;
 
-    public Folder(String path) {
-        this.path = path;
-        File file = new File(path);
-        this.name = file.getName();
-        this.createDate = new Date(file.lastModified());
+    public Folder(String name, User owner, Date createdDate) {
+        super(name, owner, createdDate);
+        folders = new ArrayList<>();
+        files = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
+    public List<Folder> getFolders() {
+        return folders;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public List<File> getFiles() {
+        return files;
     }
 
-    public String getCreator() {
-        return creator;
+    @Override
+    public String createFolder(String name) {
+        try {
+            for (Folder folder : folders) {
+                if (folder.getName().toLowerCase().equals(name))
+                    return "There is already a folder with the same name in this location.";
+            }
+            Folder folder = new Folder(name, this.getOwner(), this.getCreatedDate());
+            this.folders.add(folder);
+            return "Your folder created successfully";
+        }catch (Exception e){
+            return "Error: " + e.getMessage();
+        }
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
+    @Override
+    public String createFile(String name) {
+        try {
+            for (File file : files) {
+                if (file.getName().toLowerCase().equals(name))
+                    return "There is already a file with the same name in this location.";
+            }
+            File file = new File(name, this.getOwner());
+            this.files.add(file);
+            return "Your file created successfully";
+        }catch (Exception e){
+            return "Error: " + e.getMessage();
+        }
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    @Override
+    public String deleteFolder(String name) {
+        try {
+            for (Folder folder : folders) {
+                if (folder.getName().toLowerCase().equals(name)) {
+                    this.folders.remove(folder);
+                    return "Your folder has been deleted";
+                }
+            }
+            return "There is not folder with this name to be deleted.";
+        }catch (Exception e){
+            return "Error: " + e.getMessage();
+        }
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-    public String getPath() {
-        return path;
+    @Override
+    public String deleteFile(String name) {
+        try {
+            for (File file : files) {
+                if (file.getName().toLowerCase().equals(name)) {
+                    this.files.remove(file);
+                    return "Your file has been deleted";
+                }
+            }
+            return "There is not file with this name to be deleted.";
+        }catch (Exception e){
+            return "Error: " + e.getMessage();
+        }
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    @Override
+    public long getSize() {
+        return FilesUtil.folderSize(this);
+    }
+
+    @Override
+    public String getHumanReadableSize() {
+        return FilesUtil.humanReadableByteCount(getSize(), true);
+    }
+
+    @Override
+    public long getFilesSize(){
+        long allFilesSize = 0;
+        for (File file: files) {
+            allFilesSize += file.getSize();
+        }
+        return allFilesSize;
     }
 }
