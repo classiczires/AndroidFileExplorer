@@ -26,10 +26,10 @@ public class File extends FileInformation {
     };
 
 
-    public File(String name, User owner) {
-        super(name, owner, new Date());
+    public File(String name, User creator) {
+        super(name, creator, new Date());
         this.format = getFakeFileFormat();
-        this.size = (long) (Math.random() * 100000);
+        this.size = (long) (Math.random() * 50000000);
     }
 
     public String getFormat() {
@@ -45,11 +45,16 @@ public class File extends FileInformation {
     }
 
     private String getFakeFileFormat() {
-        return fakeFileFormats[Math.round((float) (Math.random() * 10))];
+        return fakeFileFormats[Math.round((float) (Math.random() * 9))];
     }
 
     @Override
     public String getHumanReadableSize() {
         return FilesUtil.humanReadableByteCount(size, true);
+    }
+
+    @Override
+    public boolean isFile() {
+        return true;
     }
 }

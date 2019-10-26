@@ -7,7 +7,12 @@ import java.util.Date;
  **/
 
 public class Volume extends Folder {
-    public Volume(String name, User owner) {
-        super(name, owner, new Date());
+    public Volume(String name, User creator) {
+        super(name, creator, new Date());
+    }
+
+    @Override
+    public boolean isVolume() {
+        return true;
     }
 }

@@ -1,7 +1,5 @@
 package com.zires.androidfileexplorer.model;
 
-import com.zires.androidfileexplorer.util.FilesUtil;
-
 import java.util.Date;
 
 /**
@@ -10,12 +8,12 @@ import java.util.Date;
 
 public abstract class FileInformation {
     private String name;
-    private User owner;
+    private User creator;
     private Date createdDate;
 
-    public FileInformation(String name, User owner, Date createdDate) {
+    public FileInformation(String name, User creator, Date createdDate) {
         this.name = name;
-        this.owner = owner;
+        this.creator = creator;
         this.createdDate = createdDate;
     }
 
@@ -27,13 +25,22 @@ public abstract class FileInformation {
         this.name = name;
     }
 
-    public User getOwner() {
-        return owner;
+    public User getCreator() {
+        return creator;
     }
 
     public Date getCreatedDate() {
         return createdDate;
     }
 
+    public boolean isFile(){
+        return false;
+    }
+    public boolean isFolder(){
+        return false;
+    }
+    public boolean isVolume(){
+        return false;
+    }
     public abstract String getHumanReadableSize();
 }

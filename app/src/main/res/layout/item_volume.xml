@@ -4,17 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="4dp"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="?selectableItemBackground">
+    android:padding="4dp">
 
     <ImageView
-        android:id="@+id/item_folder_icon"
+        android:id="@+id/item_volume_icon"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_folder_black_24dp" />
+        android:src="@drawable/ic_sd_storage_black_24dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,11 +22,11 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/item_folder_name"
+            android:id="@+id/item_volume_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:text="folder_name"
+            android:text="volume_name"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/item_file_format"
@@ -37,16 +34,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/item_folder_creator"
+            android:id="@+id/item_volume_creator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:text="folder_creator"
+            android:text="volume_creator"
             android:textColor="@color/subColor"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/item_folder_created_date"
+            android:id="@+id/item_volume_created_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"

@@ -58,9 +58,8 @@
             android:id="@+id/item_file_creator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:maxLines="1"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textColor="@color/subColor"
             android:text="file_creator" />
 
@@ -69,27 +68,27 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/item_file_create_size"
+                android:id="@+id/item_file_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:text="24 MB"
                 android:textColor="@color/subColor"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/item_file_create_time"
+                android:id="@+id/item_file_created_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:text="December ‎1, ‎2006, ‏‎10:37:14 PM"
                 android:textColor="@color/subColor"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:gravity="end"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/item_file_create_size"
+                app:layout_constraintStart_toEndOf="@+id/item_file_size"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

@@ -15,8 +15,8 @@ public class Folder extends FolderInformation {
     private List<Folder> folders;
     private List<File> files;
 
-    public Folder(String name, User owner, Date createdDate) {
-        super(name, owner, createdDate);
+    public Folder(String name, User creator, Date createdDate) {
+        super(name, creator, createdDate);
         folders = new ArrayList<>();
         files = new ArrayList<>();
     }
@@ -36,7 +36,7 @@ public class Folder extends FolderInformation {
                 if (folder.getName().toLowerCase().equals(name))
                     return "There is already a folder with the same name in this location.";
             }
-            Folder folder = new Folder(name, this.getOwner(), this.getCreatedDate());
+            Folder folder = new Folder(name, this.getCreator(), this.getCreatedDate());
             this.folders.add(folder);
             return "Your folder created successfully";
         }catch (Exception e){
@@ -51,7 +51,7 @@ public class Folder extends FolderInformation {
                 if (file.getName().toLowerCase().equals(name))
                     return "There is already a file with the same name in this location.";
             }
-            File file = new File(name, this.getOwner());
+            File file = new File(name, this.getCreator());
             this.files.add(file);
             return "Your file created successfully";
         }catch (Exception e){
@@ -106,5 +106,10 @@ public class Folder extends FolderInformation {
             allFilesSize += file.getSize();
         }
         return allFilesSize;
+    }
+
+    @Override
+    public boolean isFolder() {
+        return true;
     }
 }
