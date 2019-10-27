@@ -30,6 +30,14 @@ public class Folder extends FolderInformation {
     }
 
     @Override
+    public List<FileInformation> getAllContent() {
+        List<FileInformation> all = new ArrayList<>();
+        all.addAll(folders);
+        all.addAll(files);
+        return all;
+    }
+
+    @Override
     public String createFolder(String name) {
         try {
             for (Folder folder : folders) {

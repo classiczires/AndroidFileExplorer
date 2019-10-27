@@ -14,4 +14,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/emptyFolderPlaceHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="This folder is empty."
+        android:gravity="center"
+        android:textSize="16sp"/>
+
+    <uk.co.markormesher.android_fab.FloatingActionButton
+        android:id="@+id/fabManu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:buttonIcon="@drawable/ic_add_black_24dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

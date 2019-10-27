@@ -14,6 +14,9 @@ public abstract class FolderInformation extends FileInformation {
     }
 
     public abstract String createFolder(String name);
+    public abstract List<Folder> getFolders();
+    public abstract List<File> getFiles();
+    public abstract List<FileInformation> getAllContent();
     public abstract String createFile(String name);
     public abstract String deleteFolder(String name);
     public abstract String deleteFile(String name);
