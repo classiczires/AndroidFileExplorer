@@ -1,67 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:padding="4dp">
 
-    <ImageView
-        android:id="@+id/item_file_icon"
+    <RelativeLayout
         android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_file_black_24dp"/>
+        android:layout_height="70dp">
+        <ImageView
+            android:id="@+id/item_file_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_file_black_24dp" />
+
+        <TextView
+            android:id="@+id/item_file_format"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:maxLines="1"
+            android:text="mkv"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:paddingTop="12dp"/>
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_gravity="center">
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/item_file_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-            <TextView
-                android:id="@+id/item_file_name"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:text="file_name"
-                app:layout_constraintEnd_toStartOf="@+id/item_file_format"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/item_file_format"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_gray_background"
-                android:maxLines="1"
-                android:text="mkv"
-                android:textColor="@color/subColor"
-                android:textSize="16sp"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="file_name"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/item_file_creator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:textSize="12sp"
+            android:text="file_creator"
             android:textColor="@color/subColor"
-            android:text="file_creator" />
+            android:textSize="12sp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -82,11 +75,11 @@
                 android:id="@+id/item_file_created_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:gravity="end"
                 android:maxLines="1"
                 android:text="December ‎1, ‎2006, ‏‎10:37:14 PM"
                 android:textColor="@color/subColor"
                 android:textSize="12sp"
-                android:gravity="end"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/item_file_size"
                 app:layout_constraintTop_toTopOf="parent" />

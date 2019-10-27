@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?selectableItemBackgroundBorderless"
     android:clickable="true"
     android:focusable="true"
     android:layoutDirection="rtl"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="300dp">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/createItem_Name"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/createItem_NameContiner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter file name"
-        android:layout_margin="12dp"/>
+        android:layout_margin="12dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/createItem_Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/createItem_Confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create"
-        android:layout_margin="12dp"/>
+        android:layout_margin="12dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"/>
 </LinearLayout>

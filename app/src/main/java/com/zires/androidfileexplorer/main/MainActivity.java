@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.zires.androidfileexplorer.R;
 import com.zires.androidfileexplorer.model.Folder;
 import com.zires.androidfileexplorer.model.MapCurrentFolderStack;
@@ -24,6 +25,8 @@ import java.util.List;
 
 import uk.co.markormesher.android_fab.FloatingActionButton;
 import uk.co.markormesher.android_fab.SpeedDialMenuItem;
+
+import static com.zires.androidfileexplorer.util.ViewUtil.createDialog;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             if (position == 0) {
                 createFolder();
             } else if (position == 1) {
-                Toast.makeText(this, "file", Toast.LENGTH_SHORT).show();
+                createFile();
             }
         });
         FloatingActionButton fabMenu = findViewById(R.id.fabManu);
@@ -99,19 +102,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createFolder() {
-        Dialog dialog = new Dialog(this);
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.create_item_dialog);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
+        Dialog dialog = createDialog(this);
+        TextInputLayout name = dialog.findViewById(R.id.createItem_NameContiner);
+        name.setHint("Enter folder name");
         dialog.findViewById(R.id.createItem_Confirm).setOnClickListener(v -> {
             TextInputEditText text = dialog.findViewById(R.id.createItem_Name);
+            String message;
             if (!text.getText().toString().trim().isEmpty()) {
-                mappingCurrentFolder.peek().createFolder(text.getText().toString().trim());
+                message = mappingCurrentFolder.peek().createFolder(text.getText().toString().trim());
                 stackChangeListener.onStackChanged();
                 dialog.dismiss();
             } else
-                Toast.makeText(this, "Folder name can not be empty.", Toast.LENGTH_SHORT).show();
+                message = "Folder name can not be empty.";
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        });
+        dialog.show();
+
+    }
+
+    private void createFile() {
+        Dialog dialog = createDialog(this);
+        TextInputLayout name = dialog.findViewById(R.id.createItem_NameContiner);
+        name.setHint("Enter file name");
+        dialog.findViewById(R.id.createItem_Confirm).setOnClickListener(v -> {
+            TextInputEditText text = dialog.findViewById(R.id.createItem_Name);
+            String message;
+            if (!text.getText().toString().trim().isEmpty()) {
+                message = mappingCurrentFolder.peek().createFile(text.getText().toString().trim());
+                stackChangeListener.onStackChanged();
+                dialog.dismiss();
+            } else
+                message = "File name can not be empty.";
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         });
         dialog.show();
 

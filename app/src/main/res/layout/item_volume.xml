@@ -31,7 +31,8 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/item_file_format"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/item_volume_creator"
