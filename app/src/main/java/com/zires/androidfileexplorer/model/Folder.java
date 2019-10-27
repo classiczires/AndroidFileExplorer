@@ -1,11 +1,12 @@
 package com.zires.androidfileexplorer.model;
 
-import com.zires.androidfileexplorer.util.CommonUtil;
 import com.zires.androidfileexplorer.util.FilesUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.zires.androidfileexplorer.util.FilesUtil.getStorageItemType;
 
 /**
  * Created by ClassicZires on 10/26/2019.
@@ -41,13 +42,13 @@ public class Folder extends FolderInformation {
     public String createFolder(String name) {
         try {
             for (Folder folder : folders) {
-                if (folder.getName().toLowerCase().equals(name))
+                if (folder.getName().toLowerCase().equals(name.toLowerCase()))
                     return "There is already a folder with the same name in this location.";
             }
             Folder folder = new Folder(name, this.getCreator(), this.getCreatedDate());
             this.folders.add(folder);
-            return "Your folder created successfully";
-        }catch (Exception e){
+            return "Your folder created successfully.";
+        } catch (Exception e) {
             return "Error: " + e.getMessage();
         }
     }
@@ -56,43 +57,48 @@ public class Folder extends FolderInformation {
     public String createFile(String name) {
         try {
             for (File file : files) {
-                if (file.getName().toLowerCase().equals(name))
+                if (file.getName().toLowerCase().equals(name.toLowerCase()))
                     return "There is already a file with the same name in this location.";
             }
             File file = new File(name, this.getCreator());
             this.files.add(file);
-            return "Your file created successfully";
-        }catch (Exception e){
+            return "Your file created successfully.";
+        } catch (Exception e) {
             return "Error: " + e.getMessage();
         }
     }
 
     @Override
-    public String deleteFolder(String name) {
+    public String delete(String name) {
         try {
-            for (Folder folder : folders) {
-                if (folder.getName().toLowerCase().equals(name)) {
-                    this.folders.remove(folder);
-                    return "Your folder has been deleted";
+            for (FileInformation fileInformation : getAllContent()) {
+                if (fileInformation.getName().equals(name)) {
+                    if (fileInformation.isFolder()){
+                        folders.remove(fileInformation);
+                        return "Your folder has been deleted.";
+                    }else if (fileInformation.isFile()){
+                        files.remove(fileInformation);
+                        return "Your file has been deleted.";
+                    }
                 }
             }
-            return "There is not folder with this name to be deleted.";
-        }catch (Exception e){
+            return "Deleting file failure.";
+        } catch (Exception e) {
             return "Error: " + e.getMessage();
         }
     }
 
     @Override
-    public String deleteFile(String name) {
+    public String rename(String newName, int position) {
         try {
-            for (File file : files) {
-                if (file.getName().toLowerCase().equals(name)) {
-                    this.files.remove(file);
-                    return "Your file has been deleted";
+            for (FileInformation fileInformation : getAllContent()) {
+                if (fileInformation.getName().toLowerCase().equals(newName)) {
+                    return "There is already a " + getStorageItemType(fileInformation) + "with the same name in this location.";
                 }
             }
-            return "There is not file with this name to be deleted.";
-        }catch (Exception e){
+            getAllContent().get(position).setName(newName);
+            return "Your " + getStorageItemType(getAllContent().get(position)) + " renamed successfully.";
+        } catch (Exception e) {
             return "Error: " + e.getMessage();
         }
     }
@@ -108,9 +114,9 @@ public class Folder extends FolderInformation {
     }
 
     @Override
-    public long getFilesSize(){
+    public long getFilesSize() {
         long allFilesSize = 0;
-        for (File file: files) {
+        for (File file : files) {
             allFilesSize += file.getSize();
         }
         return allFilesSize;

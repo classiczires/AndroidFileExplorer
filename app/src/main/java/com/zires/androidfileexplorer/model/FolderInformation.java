@@ -18,8 +18,8 @@ public abstract class FolderInformation extends FileInformation {
     public abstract List<File> getFiles();
     public abstract List<FileInformation> getAllContent();
     public abstract String createFile(String name);
-    public abstract String deleteFolder(String name);
-    public abstract String deleteFile(String name);
+    public abstract String delete(String name);
+    public abstract String rename(String newName, int position);
     public abstract long getSize();
     public abstract long getFilesSize();
 }

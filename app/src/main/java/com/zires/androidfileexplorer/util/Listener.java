@@ -13,6 +13,7 @@ public interface Listener {
 
     interface RecyclerViewItemClickListener {
         void onItemClick(View view, int position);
+        void onItemLongClick(View view, int position);
     }
 
     interface StackChangeListener {

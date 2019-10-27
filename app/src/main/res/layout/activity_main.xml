@@ -27,5 +27,6 @@
         android:id="@+id/fabManu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:buttonIcon="@drawable/ic_add_black_24dp" />
+        app:buttonIcon="@drawable/ic_add_white_24dp"
+        app:buttonBackgroundColour="@color/colorAccent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

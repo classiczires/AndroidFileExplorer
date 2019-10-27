@@ -29,6 +29,7 @@ public class File extends FileInformation {
     public File(String name, User creator) {
         super(name, creator, new Date());
         this.format = getFakeFileFormat();
+        setName(getName().concat(".").concat(format));
         this.size = (long) (Math.random() * 50000000);
     }
 

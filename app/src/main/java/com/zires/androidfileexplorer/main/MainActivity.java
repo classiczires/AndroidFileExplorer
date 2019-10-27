@@ -1,13 +1,17 @@
 package com.zires.androidfileexplorer.main;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 emptyFolderPlaceHolder.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             }
+            runLayoutAnimation(recyclerView);
         }
     };
     private String[] users = new String[]{
@@ -86,9 +91,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRecycler() {
-        adapter = new FileSystemAdapter((view, position) -> {
-            if (adapter.getItem(position).isFolder()) {
-                mappingCurrentFolder.push((Folder) adapter.getItem(position));
+        adapter = new FileSystemAdapter(new Listener.RecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                if (adapter.getItem(position).isFolder()) {
+                    mappingCurrentFolder.push((Folder) adapter.getItem(position));
+                }
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                PopupMenu popup = new PopupMenu(MainActivity.this, view);
+                popup.inflate(R.menu.popup_menu);
+                if (mappingCurrentFolder.peek().getAllContent().get(position).isFile())
+                    popup.getMenu().removeItem(R.id.popup_folder_size);
+                popup.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case R.id.popup_rename:
+                            rename(position);
+                            return true;
+                        case R.id.popup_delete:
+                            delete(position);
+                            return true;
+                        case R.id.popup_folder_size:
+                            showFolderSize(position);
+                            return true;
+                        default:
+                            return false;
+                    }
+                });
+                popup.show();
             }
         });
         recyclerView.setAdapter(adapter);
@@ -114,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
             } else
                 message = "Folder name can not be empty.";
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         });
         dialog.show();
 
@@ -133,18 +165,59 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
             } else
                 message = "File name can not be empty.";
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         });
         dialog.show();
+    }
 
+    private void rename(int position) {
+        Dialog dialog = createDialog(MainActivity.this);
+        Button confirm = dialog.findViewById(R.id.createItem_Confirm);
+        confirm.setText("Rename");
+        TextInputEditText name = dialog.findViewById(R.id.createItem_Name);
+        name.setText(mappingCurrentFolder.peek().getAllContent().get(position).getName());
+        confirm.setOnClickListener(v -> {
+            String message;
+            if (!name.getText().toString().trim().isEmpty()) {
+                message = mappingCurrentFolder.peek().rename(name.getText().toString().trim(), position);
+                stackChangeListener.onStackChanged();
+                dialog.dismiss();
+            } else
+                message = "Name can not be empty.";
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        });
+        dialog.show();
+    }
+
+    private void delete(int position) {
+        String message;
+        message = mappingCurrentFolder.peek().delete(mappingCurrentFolder.peek().getAllContent().get(position).getName());
+        stackChangeListener.onStackChanged();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    private void showFolderSize(int position) {
+        String message;
+        message = mappingCurrentFolder.peek().getAllContent().get(position).getHumanReadableSize();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onBackPressed() {
-        if (mappingCurrentFolder.size() > 0) {
+        if (!mappingCurrentFolder.empty() && mappingCurrentFolder.size() > 0) {
             mappingCurrentFolder.pop();
         } else
             super.onBackPressed();
+    }
+
+    private void runLayoutAnimation(RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation);
+
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
     }
 
     private User getRandomUser() {

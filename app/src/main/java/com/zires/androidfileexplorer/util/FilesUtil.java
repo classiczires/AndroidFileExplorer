@@ -1,5 +1,6 @@
 package com.zires.androidfileexplorer.util;
 
+import com.zires.androidfileexplorer.model.FileInformation;
 import com.zires.androidfileexplorer.model.Folder;
 
 /**
@@ -11,10 +12,20 @@ public class FilesUtil {
     public static long folderSize(Folder folder) {
         long length = folder.getFilesSize();
         for (Folder inFolder: folder.getFolders()) {
-            length += inFolder.getFilesSize();
-            folderSize(folder);
+            length += folderSize(inFolder);
         }
         return length;
+    }
+
+    public static String getStorageItemType(FileInformation fileInformation){
+        if (fileInformation.isFolder())
+            return "folder";
+        else if (fileInformation.isFile())
+            return  "file";
+        else if (fileInformation.isVolume())
+            return  "volume";
+        else
+            return "unknown";
     }
 
     public static String humanReadableByteCount(long bytes, boolean si) {

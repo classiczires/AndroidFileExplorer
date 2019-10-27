@@ -76,7 +76,10 @@ public class FileSystemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         holder.itemView.setOnClickListener(v -> mClickListener.onItemClick(v, position));
-
+        holder.itemView.setOnLongClickListener(v -> {
+            mClickListener.onItemLongClick(v, position);
+            return true;
+        });
         if (holder instanceof FileViewHolder) {
             FileViewHolder fileViewHolder = (FileViewHolder) holder;
             File file = (File) allContent.get(position);

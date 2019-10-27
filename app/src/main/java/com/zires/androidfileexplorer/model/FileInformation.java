@@ -21,7 +21,7 @@ public abstract class FileInformation {
         return name;
     }
 
-    public void rename(String name) {
+    protected void setName(String name) {
         this.name = name;
     }
 

@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="4dp">
+    android:padding="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?selectableItemBackground">
 
     <RelativeLayout
         android:layout_width="70dp"
@@ -84,5 +87,10 @@
                 app:layout_constraintStart_toEndOf="@+id/item_file_size"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
     </LinearLayout>
+
 </LinearLayout>
