@@ -18,11 +18,4 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       run: ./gradlew build
-      
-    - name: Create a Release
-      uses: elgohr/Github-Release-Action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        args: MyReleaseMessage
 
