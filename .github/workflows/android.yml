@@ -19,12 +19,10 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
       
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug
-    - name: Releasing using Hub
-      uses: ShaunLWM/action-release-debugapk@master
+    - name: Create a Release
+      uses: elgohr/Github-Release-Action@master
       env:
-       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       APP_FOLDER: app
-       RELEASE_TITLE: New Build
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        args: MyReleaseMessage
 
