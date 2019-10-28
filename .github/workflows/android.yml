@@ -18,6 +18,19 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       run: ./gradlew build
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
+      
+    - run: mkdir -p path/to/artifact
+    - run: echo hello > path/to/artifact/world.txt
+    - uses: actions/upload-artifact@master
+      with:
+        name: my-artifact
+        path: path/to/artifact
+
+    - uses: xresloader/upload-to-github-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        file: "*.md"
+        tags: false
+        draft: true
 
