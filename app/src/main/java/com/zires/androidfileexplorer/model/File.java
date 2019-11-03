@@ -41,9 +41,6 @@ public class File extends FileInformation {
         this.format = format;
     }
 
-    public long getSize() {
-        return size;
-    }
 
     private String getFakeFileFormat() {
         return fakeFileFormats[Math.round((float) (Math.random() * 9))];
@@ -55,7 +52,17 @@ public class File extends FileInformation {
     }
 
     @Override
+    public String getType() {
+        return "file";
+    }
+
+    @Override
     public boolean isFile() {
         return true;
+    }
+
+    @Override
+    public long getSize() {
+        return size;
     }
 }

@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                             delete(position);
                             return true;
                         case R.id.popup_folder_size:
-                            showFolderSize(position);
+                            showSize(position);
                             return true;
                         default:
                             return false;
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-    private void showFolderSize(int position) {
+    private void showSize(int position) {
         String message;
         message = mappingCurrentFolder.peek().getAllContent().get(position).getHumanReadableSize();
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();

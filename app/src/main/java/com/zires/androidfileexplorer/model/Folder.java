@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.zires.androidfileexplorer.util.FilesUtil.getStorageItemType;
-
 /**
  * Created by ClassicZires on 10/26/2019.
  **/
@@ -56,12 +54,12 @@ public class Folder extends FolderInformation {
     @Override
     public String createFile(String name) {
         try {
+            File newfile = new File(name, this.getCreator());
             for (File file : files) {
-                if (file.getName().toLowerCase().equals(name.toLowerCase()))
+                if (file.getName().toLowerCase().equals(newfile.getName().toLowerCase()))
                     return "There is already a file with the same name in this location.";
             }
-            File file = new File(name, this.getCreator());
-            this.files.add(file);
+            this.files.add(newfile);
             return "Your file created successfully.";
         } catch (Exception e) {
             return "Error: " + e.getMessage();
@@ -93,11 +91,11 @@ public class Folder extends FolderInformation {
         try {
             for (FileInformation fileInformation : getAllContent()) {
                 if (fileInformation.getName().toLowerCase().equals(newName)) {
-                    return "There is already a " + getStorageItemType(fileInformation) + "with the same name in this location.";
+                    return "There is already a " + fileInformation.getType() + " with the same name in this location.";
                 }
             }
             getAllContent().get(position).setName(newName);
-            return "Your " + getStorageItemType(getAllContent().get(position)) + " renamed successfully.";
+            return "Your " + getAllContent().get(position).getType() + " renamed successfully.";
         } catch (Exception e) {
             return "Error: " + e.getMessage();
         }
@@ -105,7 +103,11 @@ public class Folder extends FolderInformation {
 
     @Override
     public long getSize() {
-        return FilesUtil.folderSize(this);
+        long size = 0;
+        for (FileInformation fileInformation : getAllContent()) {
+            size += fileInformation.getSize();
+        }
+        return size;
     }
 
     @Override
@@ -114,12 +116,8 @@ public class Folder extends FolderInformation {
     }
 
     @Override
-    public long getFilesSize() {
-        long allFilesSize = 0;
-        for (File file : files) {
-            allFilesSize += file.getSize();
-        }
-        return allFilesSize;
+    public String getType() {
+        return "folder";
     }
 
     @Override

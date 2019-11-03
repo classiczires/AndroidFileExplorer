@@ -15,4 +15,9 @@ public class Volume extends Folder {
     public boolean isVolume() {
         return true;
     }
+
+    @Override
+    public String getType() {
+        return "volume";
+    }
 }

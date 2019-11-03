@@ -42,5 +42,7 @@ public abstract class FileInformation {
     public boolean isVolume(){
         return false;
     }
+    public abstract long getSize();
     public abstract String getHumanReadableSize();
+    public abstract String getType();
 }

@@ -91,11 +91,11 @@ public class FileSystemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             fileViewHolder.createdDate.setText(file.getCreatedDate().toString());
         } else if (holder instanceof FolderViewHolder) {
             FolderViewHolder folderViewHolder = (FolderViewHolder) holder;
-            Folder folder = (Folder) allContent.get(position);
+            FileInformation fileInformation = allContent.get(position);
 
-            folderViewHolder.name.setText(folder.getName());
-            folderViewHolder.creator.setText(folder.getCreator().getName());
-            folderViewHolder.createdDate.setText(folder.getCreatedDate().toString());
+            folderViewHolder.name.setText(fileInformation.getName());
+            folderViewHolder.creator.setText(fileInformation.getCreator().getName());
+            folderViewHolder.createdDate.setText(fileInformation.getCreatedDate().toString());
         } else if (holder instanceof VolumeViewHolder) {
             VolumeViewHolder volumeViewHolder = (VolumeViewHolder) holder;
             Volume volume = (Volume) allContent.get(position);
