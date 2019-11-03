@@ -20,7 +20,7 @@ steps:
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
-    codeCoverageToolOption: 'JaCoCo'
+    codeCoverageToolOption: 'Cobertura'
     testResultsFiles: '**/TEST-*.xml'
     testRunTitle: 'Unit tests'
     tasks: 'build'
