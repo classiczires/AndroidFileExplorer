@@ -23,3 +23,10 @@ steps:
     testResultsFiles: '**/TEST-*.xml'
     testRunTitle: 'Unit tests'
     tasks: 'build'
+    
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'JaCoCo'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/AndroidFileExplorer/coverage/coverage.xml'
+    pathToSources: '$(System.DefaultWorkingDirectory)/AndroidFileExplorer/src/main/java/'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/AndroidFileExplorer/coverage/'
